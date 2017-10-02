@@ -35,35 +35,35 @@
 
             <li class="active">
 
-                <a href="#">
+                <a href="{{route('cliente.index')}}">
                     <i class="fa fa-user-plus"></i>
                     <span>Cadastro de Cliente</span>
                 </a>
             </li>
             <li class="active">
 
-                <a href="#">
+                <a href="{{route('endereco.index')}}">
                     <i class="fa fa-address-card"></i>
                     <span>Cadastro de Endereço</span>
                 </a>
             </li>
             <li class="active">
 
-                <a href="#">
+                <a href="{{route('cidade.index')}}">
                     <i class="fa fa-building"></i>
                     <span>Cadastro de Cidade</span>
                 </a>
             </li>
             <li class="active">
 
-                <a href="#">
+                <a href="{{route('estado.index')}}">
                     <i class="fa fa-flag"></i>
                     <span>Cadastro de Estado</span>
                 </a>
             </li>
             <li class="active">
 
-                <a href="#">
+                <a href="{{route('pais.index')}}">
                     <i class="fa fa-globe"></i>
                     <span>Cadastro de País</span>
                 </a>
