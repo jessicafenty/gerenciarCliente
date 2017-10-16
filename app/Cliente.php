@@ -9,4 +9,8 @@ class Cliente extends Model
     protected $fillable = ['nome', 'dataNasc', 'email', 'sexo', 'cpf', 'rg'];
     protected $guarded = 'id';
     protected $dates = ['dataNasc'];
+
+    public function endereco(){
+        return $this->hasMany('App\Endereco', 'idCliente');
+    }
 }

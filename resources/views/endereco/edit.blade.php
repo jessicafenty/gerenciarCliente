@@ -1,42 +1,34 @@
 @extends('adminlte::layouts.app')
 
 @section('htmlheader_title')
-    Novo Endereço
+    Editar Endereco
 @endsection
-
-{{--@section('contentheader_title')--}}
-{{--Contatos--}}
-{{--@endsection--}}
 
 
 @section('main-content')
-    @if (Session::has('mensagem'))
-    <div class="alert alert-success">{{Session::get('mensagem')}}</div>
-    @endif
 
     @if($errors->any())
 
-        <div class="box alert alert-danger">
-            <div class="box-header with-border">
-                <h3 class="box-title text-gray">Favor preencher os campos corretamente!</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool"
-                            data-widget="remove" data-toggle="tooltip" title="Fechar">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="box-body">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
+    <div class="box alert alert-danger">
+    <div class="box-header with-border">
+    <h3 class="box-title text-gray">Favor preencher os campos corretamente!</h3>
+    <div class="box-tools pull-right">
+    <button type="button" class="btn btn-box-tool"
+    data-widget="remove" data-toggle="tooltip" title="Fechar">
+    <i class="fa fa-times"></i>
+    </button>
+    </div>
+    </div>
+    <div class="box-body">
+    <ul>
+    @foreach($errors->all() as $error)
+    <li>{{$error}}</li>
+    @endforeach
+    </ul>
+    </div>
+    </div>
 
     @endif
-
 
 
     <div class="container-fluid spark-screen">
@@ -45,13 +37,14 @@
                 <div class="box">
 
                     <div class="box-header with-border">
-                        <h3 class="box-title">Cadastro de Endereço</h3>
+                        <h3 class="box-title">Editar Endereco</h3>
                     </div>
 
                     <div class="box-body">
 
-                        <form class="form-horizontal" action="{{action('EnderecoController@store')}}" method="post" enctype="multipart/form-data">
-                            {{ csrf_field() }}
+                        <form action="{{route('endereco.update', $endereco->id)}}" class="form-horizontal" method="post" enctype="multipart/form-data" id="formEditar">
+                            <input type="hidden" name="_method" value="PUT">
+                            {{csrf_field()}}
 
                             <div class="form-group">
                                 <label for="idCliente" class="control-label col-sm-2">
@@ -71,7 +64,7 @@
                                 <label for="inputLogradouro" class="col-sm-2 control-label">Logradouro</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control input-lg" id="inputLogradouro" name="logradouro"
-                                           value="{{old('logradouro')}}" placeholder="Logradouro">
+                                           value="{{$endereco->logradouro}}" placeholder="Logradouro">
                                 </div>
                             </div>
 
@@ -79,7 +72,7 @@
                                 <label for="inputBairro" class="col-sm-2 control-label">Bairro</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control input-lg" id="inputBairro" name="bairro"
-                                           value="{{old('bairro')}}" placeholder="Bairro">
+                                           value="{{$endereco->bairro}}" placeholder="Bairro">
                                 </div>
                             </div>
 
@@ -87,7 +80,7 @@
                                 <label for="inputNumero" class="col-sm-2 control-label">Número</label>
                                 <div class="col-sm-10">
                                     <input type="number" class="form-control input-lg" id="inputNumero" name="numero"
-                                           value="{{old('numero')}}" placeholder="Número">
+                                           value="{{$endereco->numero}}" placeholder="Número">
                                 </div>
                             </div>
 
@@ -95,7 +88,7 @@
                                 <label for="inputCep" class="col-sm-2 control-label">CEP</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control input-lg" id="inputCep" name="cep"
-                                           value="{{old('cep')}}" placeholder="CEP">
+                                           value="{{$endereco->cep}}" placeholder="CEP">
                                 </div>
                             </div>
 
@@ -103,7 +96,7 @@
                                 <label for="inputComplemento" class="col-sm-2 control-label">Complemento</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control input-lg" id="inputComplemento" name="complemento"
-                                           value="{{old('complemento')}}" placeholder="Complemento">
+                                           value="{{$endereco->complemento}}" placeholder="Complemento">
                                 </div>
                             </div>
 
@@ -111,7 +104,7 @@
                                 <label for="inputPontoRef" class="col-sm-2 control-label">Ponto de Referência</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control input-lg" id="inputPontoRef" name="pontoRef"
-                                           value="{{old('pontoRef')}}" placeholder="Ponto de Referência">
+                                           value="{{$endereco->pontoRef}}" placeholder="Ponto de Referência">
                                 </div>
                             </div>
 
@@ -122,7 +115,7 @@
                                 <div class="col-md-10">
                                     <select class="form-control" name="pais" id="pais">
                                         @foreach($pais as $value)
-                                            <option value="{{$value['id']}}" {{ $value['id'] === (isset($estado->idPais) ? $estado->idPais : '' ) ? 'selected' : '' }}>{{$value['nome']}}</option>
+                                            <option value="{{$value['id']}}" {{ $value['id'] === (isset($endereco->cidade->estado->pais->id) ? $endereco->cidade->estado->pais->id : '' ) ? 'selected' : '' }}>{{$value['nome']}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -134,7 +127,9 @@
                                 </label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="estado" id="estado">
-                                        <option value=""></option>
+                                        @foreach($estado as $value)
+                                            <option value="{{$value['id']}}" {{ $value['id'] === (isset($endereco->cidade->idEstado) ? $endereco->cidade->idEstado : '' ) ? 'selected' : '' }}>{{$value['nome']}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -144,13 +139,16 @@
                                 </label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="cidade" id="cidade">
-                                        <option value=""></option>
+                                        @foreach($cidade as $value)
+                                            <option value="{{$value['id']}}" {{ $value['id'] === (isset($endereco->cidade->id) ? $endereco->cidade->id : '' ) ? 'selected' : '' }}>{{$value['nome']}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
 
+
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right btn-lg">Save</button>
+                                <button id="salvar" type="submit" class="btn btn-info pull-right btn-lg">Salvar</button>
                             </div>
 
                         </form>
@@ -161,16 +159,18 @@
             </div>
         </div>
     </div>
-    @endsection
+@endsection
 @section('scriptlocal')
-<script type="text/javascript">
+    <script type="text/javascript">
       $(document).ready(function () {
         $('#estado').attr('disabled', 'disabled');
         $('#cidade').attr('disabled', 'disabled');
         $('#pais').click(function () {
           $('#estado').removeAttr('disabled');
+          $('#estado').empty();
+          $('#cidade').empty();
           $.ajax({
-            url:'../getEstados/'+$('#pais').val(),
+            url:'../../getEstados/'+$('#pais').val(),
             type:'GET',
             dataType:'json',
             success: function (json) {
@@ -184,7 +184,7 @@
         $('#estado').click(function () {
           $('#cidade').removeAttr('disabled');
           $.ajax({
-            url:'../getCidades/'+$('#estado').val(),
+            url:'../../getCidades/'+$('#estado').val(),
             type:'GET',
             dataType:'json',
             success: function (json) {
@@ -195,7 +195,10 @@
             }
           })
         })
+        $('#formEditar').submit(function(){
+          $('#estado').removeAttr('disabled');
+          $('#cidade').removeAttr('disabled');
+        });
       })
-</script>
+    </script>
 @endsection
-

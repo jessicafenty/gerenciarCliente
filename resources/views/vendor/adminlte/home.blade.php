@@ -23,7 +23,7 @@
 						</div>
 					</div>
 					<div class="box-body">
-                        <p>Welcome to GClients!</p>
+                        <p>Bem vindo ao GClients!</p>
 {{--						{{ trans('adminlte_lang::message.logged') }}. Start creating your amazing application!--}}
 					</div>
 					<!-- /.box-body -->

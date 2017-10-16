@@ -23,9 +23,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('cidade', 'CidadeController');
     Route::resource('endereco', 'EnderecoController');
 
-    Route::get( '/ajax', array(
-        'as' => 'ajax',
-        'uses' => 'AjaxController@getEstados'
-    ) );
+//    Route::get('/ajax', function (){
+//        $pais_id = \Illuminate\Support\Facades\Input::get('pais_id');
+//        $estados = \App\Estado::where('idPais', '=', $pais_id)->get();
+//        return \Illuminate\Http\Response::json($estados);
+//    });
+//    Route::get('/ajaxteste', 'AjaxController@getEstados');
+//    Route::get( '/ajax', array(
+//        'as' => 'ajax',
+//        'uses' => 'AjaxController@getEstados'
+//    ) );
 
 });
+Route::get('getEstados/{id}', 'AjaxController@getEstados');
+Route::get('getCidades/{id}', 'AjaxController@getCidades');

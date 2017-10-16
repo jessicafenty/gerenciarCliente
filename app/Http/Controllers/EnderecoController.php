@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Cidade;
 use App\Cliente;
+use App\Endereco;
+use App\Estado;
+use App\Http\Requests\EnderecoRequest;
 use App\Pais;
 use Illuminate\Http\Request;
 
@@ -27,7 +31,8 @@ class EnderecoController extends Controller
     public function create()
     {
         $pais = Pais::all();
-        return view('endereco.create', compact('pais'));
+        $clientes = Cliente::all();
+        return view('endereco.create', compact('pais', 'clientes'));
     }
 
     /**
@@ -36,9 +41,21 @@ class EnderecoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EnderecoRequest $request)
     {
-        //
+        $cliente = Cliente::find($request->input('clientes'));
+        $cidade = Cidade::find($request->input('cidade'));
+        $endereco = new Endereco();
+        $endereco->logradouro = $request->input('logradouro');
+        $endereco->bairro = $request->input('bairro');
+        $endereco->numero = $request->input('numero');
+        $endereco->cep = $request->input('cep');
+        $endereco->complemento = $request->input('complemento');
+        $endereco->pontoRef = $request->input('pontoRef');
+        $endereco->cliente()->associate($cliente);
+        $endereco->cidade()->associate($cidade);
+        $endereco->save();
+        return redirect('/endereco/'.$cliente->id);
     }
 
     /**
@@ -49,7 +66,9 @@ class EnderecoController extends Controller
      */
     public function show($id)
     {
-        //
+        $enderecos = Endereco::where('idCliente','=',$id)->get();
+        $cliente = Cliente::findOrFail($id);
+        return view('endereco.show', compact('enderecos', 'cliente'));
     }
 
     /**
@@ -60,7 +79,12 @@ class EnderecoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $endereco = Endereco::find($id);
+        $clientes = Cliente::all();
+        $pais = Pais::all();
+        $estado = Estado::all();
+        $cidade = Cidade::all();
+        return view('endereco.edit', compact('endereco','clientes', 'pais', 'estado', 'cidade'));
     }
 
     /**
@@ -70,9 +94,15 @@ class EnderecoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EnderecoRequest $request, $id)
     {
-        //
+        $cliente = Cliente::find($request->input('clientes'));
+        $cidade = Cidade::find($request->input('cidade'));
+        $endereco = Endereco::findOrFail($id);
+        $endereco->cliente()->associate($cliente);
+        $endereco->cidade()->associate($cidade);
+        $endereco->update($request->all());
+        return redirect('/endereco/'.$cliente->id);
     }
 
     /**
@@ -83,6 +113,8 @@ class EnderecoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $endereco =  Endereco::findOrFail($id);
+        $endereco->delete();
+        return redirect('/endereco');
     }
 }

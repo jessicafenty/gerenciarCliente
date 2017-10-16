@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaisRequest;
 use App\Pais;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -38,7 +39,7 @@ class PaisController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PaisRequest $request)
     {
         $arquivo = Input::file('bandeira');
         $form = $request->all();
@@ -92,24 +93,16 @@ class PaisController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PaisRequest $request, $id)
     {
         $pais = Pais::find($id);
         $pais->nome = $request->nome;
         $pais->sigla = $request->sigla;
-        //$pais->bandeira = $request->bandeira;
-        //echo $pais->bandeira;
 
-        //$arquivo = Input::file('bandeira');
-        //if(!empty($arquivo)){
         if(isset($request->bandeira)){
-            // It's not empty
             $arquivo = Input::file('bandeira');
             $pais->bandeira = (string)Image::make($arquivo)->encode('data-url');
-
         }
-
-
         $pais->save();
         Session::flash('mensagem', 'País atualizado com sucesso!');
         return redirect('/pais');

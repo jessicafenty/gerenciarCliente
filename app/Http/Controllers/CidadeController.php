@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cidade;
 use App\Estado;
+use App\Http\Requests\CidadeRequest;
 use Illuminate\Http\Request;
 
 class CidadeController extends Controller
@@ -36,7 +37,7 @@ class CidadeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CidadeRequest $request)
     {
         $estado = Estado::find($request->input('estado'));
         $cidade = new Cidade();
@@ -78,7 +79,7 @@ class CidadeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CidadeRequest $request, $id)
     {
         $estado = Estado::find($request->input('estado'));
         $cidade = Cidade::findOrFail($id);
