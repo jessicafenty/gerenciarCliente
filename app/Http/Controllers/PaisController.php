@@ -18,7 +18,8 @@ class PaisController extends Controller
      */
     public function index()
     {
-        $pais = Pais::paginate(5);
+        //$pais = Pais::paginate(5);
+        $pais = Pais::all();
         return view('pais.index', compact('pais'));
     }
 

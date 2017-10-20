@@ -23,8 +23,8 @@ class CreateEnderecosTable extends Migration
             $table->string('pontoRef');
             $table->integer('idCidade')->unsigned();;
             $table->integer('idCliente')->unsigned();
-            $table->foreign('idCidade')->references('id')->on('cidades');
-            $table->foreign('idCliente')->references('id')->on('clientes');
+            $table->foreign('idCidade')->references('id')->on('cidades')->onDelete('cascade');;
+            $table->foreign('idCliente')->references('id')->on('clientes')->onDelete('cascade');;
             $table->timestamps();
         });
     }

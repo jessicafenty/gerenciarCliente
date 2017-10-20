@@ -78,7 +78,7 @@
                                 </tbody>
 
                         </table>
-                        {{$pais->links()}}
+                        {{--{{$pais->links()}}--}}
                     </div>
                 </div>
 

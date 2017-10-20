@@ -23,7 +23,7 @@
                             <h2>{{$pais->nome}}</h2>
                             <p>
                                 <strong>Sigla: </strong> {{$pais->sigla}}<br>
-                                <strong>Bandeira: </strong>
+                                <strong>Bandeira: </strong><br>
                                 <img src="{{$pais->bandeira}}">
                             </p>
 

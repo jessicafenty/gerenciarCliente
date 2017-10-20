@@ -67,6 +67,9 @@
                                                 </div>
 
                                             </div>
+
+
+
                     </div>
                 </div>
 
@@ -78,6 +81,10 @@
                             @endforeach
 
                         </div>
+    <a href="{{route('endereco.index')}}" class="btn btn-small btn-primary" style="float: right">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Voltar
+    </a>
 
                     </div>
 

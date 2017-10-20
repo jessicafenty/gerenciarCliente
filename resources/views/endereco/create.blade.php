@@ -150,7 +150,7 @@
                             </div>
 
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right btn-lg">Save</button>
+                                <button type="submit" class="btn btn-info pull-right btn-lg">Salvar</button>
                             </div>
 
                         </form>
